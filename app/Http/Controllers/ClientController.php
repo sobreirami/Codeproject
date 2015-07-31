@@ -34,7 +34,7 @@ class ClientController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Requests\ClientRequest $request)
     {
         return $this->client->create($request->all());
     }
@@ -57,7 +57,7 @@ class ClientController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Requests\ClientRequest $request, $id)
     {
         $this->client->find($id)->update($request->all());
 
