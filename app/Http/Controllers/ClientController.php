@@ -48,7 +48,6 @@ class ClientController extends Controller
     {
         return $this->service->create($request->all());
     }
-    
 
     /**
      * Display the specified resource.
