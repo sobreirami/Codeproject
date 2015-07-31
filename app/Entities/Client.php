@@ -16,4 +16,9 @@ class Client extends Model
         'obs'
     ];
 
+    public function project()
+    {
+        return $this->hasMany('CodeProject\Project');
+    }
+
 }

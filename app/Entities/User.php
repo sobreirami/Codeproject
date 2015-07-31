@@ -32,4 +32,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    public function owner()
+    {
+        return $this->hasMany('CodeProject\Project');
+    }
+
 }

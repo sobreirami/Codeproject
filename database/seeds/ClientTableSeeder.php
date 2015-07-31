@@ -11,6 +11,7 @@ class ClientTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement("SET foreign_key_checks = 0");
         \CodeProject\Entities\Client::truncate();
         factory(\CodeProject\Entities\Client::class, 10)->create();
     }
