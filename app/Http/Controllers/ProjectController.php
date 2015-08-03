@@ -56,7 +56,7 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        return $this->repository->with(['owner', 'client', 'notes', 'tasks', 'members'])->find($id);
+        return $this->service->show($id);
     }
 
     /**
@@ -79,8 +79,6 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        if($this->repository->delete($id)) {
-            return ['success' => true];
-        }
+        return $this->service->delete($id);
     }
 }

@@ -35,7 +35,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return  $this->repository->all();
+        return  $this->service->index();
     }
 
     /**
@@ -57,7 +57,7 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        return $this->repository->find($id);
+        return $this->service->show($id);
     }
 
     /**
@@ -80,8 +80,6 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        if($this->repository->delete($id)) {
-            return ['success' => true];
-        }
+        return $this->service->delete($id);
     }
 }
