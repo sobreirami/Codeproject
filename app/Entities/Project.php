@@ -8,7 +8,6 @@ class Project extends Model
 {
 
     protected $fillable  = [
-        'id',
         'owner_id',
         'client_id',
         'name',
@@ -20,12 +19,17 @@ class Project extends Model
 
     public function owner()
     {
-        return $this->belongsTo('CodeProject\Entities\User');
+        return $this->belongsTo(User::class);
     }
 
     public function client()
     {
-        return $this->belongsTo('CodeProject\Entities\Client');
+        return $this->belongsTo(Client::class);
+    }
+
+    public function notes()
+    {
+        return $this->hasMany(ProjectNote::class);
     }
 
 }

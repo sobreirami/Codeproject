@@ -19,6 +19,6 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt(str_random(123456)),
             'remember_token' => str_random(10)
         ]);
-        factory(\CodeProject\Entities\User::class, 2)->create();
+        factory(\CodeProject\Entities\User::class, 9)->create();
     }
 }
