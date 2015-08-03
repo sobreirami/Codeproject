@@ -34,7 +34,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return  $this->repository->with(['owner', 'client'])->all();
+        return  $this->repository->with(['owner', 'client', 'notes', 'tasks'])->all();
     }
 
     /**
@@ -56,7 +56,7 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        return $this->repository->with(['owner', 'client', 'notes'])->find($id);
+        return $this->repository->with(['owner', 'client', 'notes', 'tasks'])->find($id);
     }
 
     /**
