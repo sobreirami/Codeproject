@@ -2,26 +2,26 @@
 
 namespace CodeProject\Http\Controllers;
 
-use CodeProject\Repositories\ProjectRepository;
-use CodeProject\Services\ProjectService;
+use CodeProject\Repositories\ProjectMemberRepository;
+use CodeProject\Services\ProjectMemberService;
 use Illuminate\Http\Request;
 
 use CodeProject\Http\Requests;
 
-class ProjectController extends Controller
+class ProjectMemberController extends Controller
 {
 
     /**
-     * @var ProjectRepository
+     * @var ProjectMemberRepository
      */
     private $repository;
 
     /**
-     * @var ProjectService
+     * @var ProjectMemberService
      */
     private $service;
 
-    public function __construct(ProjectRepository $repository, ProjectService $service)
+    public function __construct(ProjectMemberRepository $repository, ProjectMemberService $service)
     {
         $this->repository = $repository;
         $this->service = $service;
@@ -34,7 +34,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return  $this->repository->with(['owner', 'client', 'notes', 'tasks', 'members'])->all();
+        return  $this->repository->with(['project', 'member'])->all();
     }
 
     /**
@@ -56,7 +56,7 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        return $this->repository->with(['owner', 'client', 'notes', 'tasks', 'members'])->find($id);
+        return $this->repository->with(['project', 'member'])->find($id);
     }
 
     /**

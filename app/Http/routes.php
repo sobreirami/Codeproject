@@ -34,4 +34,12 @@ Route::group(['prefix' => 'project', 'where' => ['id' => '[0-9]+']], function() 
         Route::put('{id}', 'ProjectTaskController@update');
     });
 
+    Route::group(['prefix' => 'member', 'where' => ['id' => '[0-9]+']], function() {
+        Route::get('', 'ProjectMemberController@index');
+        Route::post('', 'ProjectMemberController@store');
+        Route::get('{id}', 'ProjectMemberController@show');
+        Route::delete('{id}', 'ProjectMemberController@destroy');
+        Route::put('{id}', 'ProjectMemberController@update');
+    });
+
 });
