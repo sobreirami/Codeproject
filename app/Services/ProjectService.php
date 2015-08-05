@@ -4,6 +4,8 @@ namespace CodeProject\Services;
 
 use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Validators\ProjectValidator;
+use CodeProject\Repositories\ProjectMemberRepository;
+use CodeProject\Validators\ProjectMemberValidator;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -19,10 +21,23 @@ class ProjectService
      */
     protected $validator;
 
-    public function __construct(ProjectRepository $repository, ProjectValidator $validator)
+    /**
+     * @var ProjectMemberRepository
+     */
+    protected $repositoryProjectMember;
+
+    /**
+     * @var ProjectMemberValidator
+     */
+    protected $validatorProjectMember;
+
+    public function __construct(ProjectRepository $repository, ProjectValidator $validator, ProjectMemberRepository $repositoryProjectMember, ProjectMemberValidator $validatorProjectMember)
     {
         $this->repository = $repository;
         $this->validator = $validator;
+
+        $this->repositoryProjectMember = $repositoryProjectMember;
+        $this->validatorProjectMember = $validatorProjectMember;
     }
 
     public function create(array $data)
@@ -101,4 +116,71 @@ class ProjectService
             ];
         }
     }
+
+    public function addMember(array $data)
+    {
+        try {
+            $this->validatorProjectMember->with($data)->passesOrFail();
+            return $this->repositoryProjectMember->create($data);
+        }
+        catch(ValidatorException $e) {
+            return [
+                'error' => true,
+                'message' => $e->getMessageBag()
+            ];
+        }
+        catch(ModelNotFoundException $e) {
+            return [
+                'error' => true,
+                'message' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function removeMember($id, $id_user)
+    {
+        try {
+            $this->repositoryProjectMember->detach(['project_id' => $id, 'user_id' => $id_user]);
+            
+            return [
+                'message' => 'User delete project success'
+            ];
+        }
+        catch(\PDOException $e) {
+            return [
+                'error' => true,
+                'message' => $e->getMessage()
+            ];
+        }
+        catch(ModelNotFoundException $e) {
+            return [
+                'error' => true,
+                'message' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function allMember($id)
+    {
+        return $this->repositoryProjectMember->findWhere(['project_id' => $id])->all();
+    }
+
+    public function isMember($id, $id_user)
+    {
+        $data = $this->repositoryProjectMember->findWhere(['project_id' => $id, 'user_id' => $id_user])->all();
+
+        if($data)
+        {
+            return [
+                'message' => 'User is already member of the project'
+            ];
+        }
+        else
+        {
+            return [
+                'message' => 'User is not member of the project'
+            ];
+        }
+    }
+
 }

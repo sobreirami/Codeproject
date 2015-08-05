@@ -10,13 +10,18 @@ Route::group(['prefix' => 'client', 'where' => ['id' => '[0-9]+']], function() {
 
 });
 
-Route::group(['prefix' => 'project', 'where' => ['id' => '[0-9]+']], function() {
+Route::group(['prefix' => 'project', 'where' => ['id' => '[0-9]+', 'id_user' => '[0-9]+']], function() {
 
     Route::get('', 'ProjectController@index');
     Route::post('', 'ProjectController@store');
     Route::get('{id}', 'ProjectController@show');
     Route::delete('{id}', 'ProjectController@destroy');
     Route::put('{id}', 'ProjectController@update');
+
+    Route::get('{id}/members', 'ProjectController@Member');
+    Route::post('{id}/members', 'ProjectController@addMember');
+    Route::delete('{id}/members/{id_user}', 'ProjectController@removeMember');
+    Route::get('{id}/members/{id_user}', 'ProjectController@isMember');
 
     Route::group(['prefix' => 'note', 'where' => ['id' => '[0-9]+']], function() {
         Route::get('', 'ProjectNoteController@index');
