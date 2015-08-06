@@ -140,8 +140,9 @@ class ProjectService
     public function removeMember($id, $id_user)
     {
         try {
-            $this->repositoryProjectMember->detach(['project_id' => $id, 'user_id' => $id_user]);
-            
+
+            $this->repository->find($id)->members()->detach($id_user);
+
             return [
                 'message' => 'User delete project success'
             ];
