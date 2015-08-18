@@ -29,6 +29,8 @@ Route::group(['middleware' => 'oauth'], function() {
         Route::delete('{id}/members/{id_user}', 'ProjectController@removeMember');
         Route::get('{id}/members/{id_user}', 'ProjectController@isMember');
 
+        Route::post('{id}/file', 'ProjectFileController@store');
+
         Route::group(['prefix' => 'note', 'where' => ['id' => '[0-9]+']], function() {
             Route::get('', 'ProjectNoteController@index');
             Route::post('', 'ProjectNoteController@store');
